@@ -18,7 +18,7 @@ struct WebService {
 
     // MARK:- Index
     static func index<T: Codable>(path: String, type: T.Type, handler: @escaping (Result<[T], WebServiceError>) -> Void) {
-        guard let url = URL(string: "\(Constants.API_PATH)\(path)") else { handler(.failure(.badUrlError)); return }
+        guard let url = URL(string: "\(Constants.API_PATH)\(path)\(Constants.API_TOKEN)") else { handler(.failure(.badUrlError)); return }
         
         var request = URLRequest(url: url)
         
@@ -37,7 +37,7 @@ struct WebService {
     
     // MARK:- Get
     static func get<T:Codable>(path: String, type: T.Type, handler: @escaping (Result<T, WebServiceError>) -> Void) {
-        guard let url = URL(string: "\(Constants.API_PATH)\(path)") else { handler(.failure(.badUrlError)); return }
+        guard let url = URL(string: "\(Constants.API_PATH)\(path)\(Constants.API_TOKEN)") else { handler(.failure(.badUrlError)); return }
         
         var request = URLRequest(url: url)
         
@@ -55,7 +55,7 @@ struct WebService {
     
     // MARK:- Post
     static func post<T:Codable>(path: String, body: [String: AnyHashable], type: T.Type, handler: @escaping (Result<T, WebServiceError>) -> Void) {
-        guard let url = URL(string: "\(Constants.API_PATH)\(path)") else { handler(.failure(.badUrlError)); return }
+        guard let url = URL(string: "\(Constants.API_PATH)\(path)\(Constants.API_TOKEN)") else { handler(.failure(.badUrlError)); return }
         
         guard let body = try? JSONSerialization.data(withJSONObject: body, options: []) else { handler(.failure(.parsingJsonError)); return }
         
@@ -77,7 +77,7 @@ struct WebService {
     
     // MARK:- Put
     static func put<T:Codable>(path: String, body: [String: AnyHashable], type: T.Type, handler: @escaping (Result<Int, WebServiceError>) -> Void) {
-        guard let url = URL(string: "\(Constants.API_PATH)\(path)") else { handler(.failure(.badUrlError)); return }
+        guard let url = URL(string: "\(Constants.API_PATH)\(path)\(Constants.API_TOKEN)") else { handler(.failure(.badUrlError)); return }
         
         guard let body = try? JSONSerialization.data(withJSONObject: body, options: []) else { handler(.failure(.parsingJsonError)); return }
         
@@ -101,7 +101,7 @@ struct WebService {
     
     // MARK:- Delete
     static func delete<T:Codable>(path: String, type: T.Type, handler: @escaping (Result<Int, WebServiceError>) -> Void) {
-        guard let url = URL(string: "\(Constants.API_PATH)\(path)") else { handler(.failure(.badUrlError)); return }
+        guard let url = URL(string: "\(Constants.API_PATH)\(path)\(Constants.API_TOKEN)") else { handler(.failure(.badUrlError)); return }
         
         var request = URLRequest(url: url)
         

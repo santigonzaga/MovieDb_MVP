@@ -22,6 +22,7 @@
 		DE6F1A3227D2827200736594 /* Genre.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6F1A3127D2827200736594 /* Genre.swift */; };
 		DE6F1A3527D283E000736594 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = DE6F1A3427D283E000736594 /* Kingfisher */; };
 		DE6F1A3727D2841A00736594 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6F1A3627D2841A00736594 /* Constants.swift */; };
+		DE6F1A3A27D2897B00736594 /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6F1A3927D2897B00736594 /* ViewExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 		DE6F1A2F27D2825900736594 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		DE6F1A3127D2827200736594 /* Genre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Genre.swift; sourceTree = "<group>"; };
 		DE6F1A3627D2841A00736594 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		DE6F1A3927D2897B00736594 /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +176,7 @@
 		DE6F1A2627D279A000736594 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				DE6F1A3827D2896000736594 /* Extensions */,
 				DE6F1A0027D276F100736594 /* Info.plist */,
 				DE6F19FB27D276F100736594 /* Assets.xcassets */,
 				DE6F19FD27D276F100736594 /* LaunchScreen.storyboard */,
@@ -182,6 +185,14 @@
 				DE6F1A3627D2841A00736594 /* Constants.swift */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		DE6F1A3827D2896000736594 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				DE6F1A3927D2897B00736594 /* ViewExtensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -328,6 +339,7 @@
 				DE6F19F527D276EF00736594 /* SceneDelegate.swift in Sources */,
 				DE6F1A2A27D281CD00736594 /* ListMoviesPresenter.swift in Sources */,
 				DE6F1A3227D2827200736594 /* Genre.swift in Sources */,
+				DE6F1A3A27D2897B00736594 /* ViewExtensions.swift in Sources */,
 				DE6F1A3727D2841A00736594 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
