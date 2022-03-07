@@ -15,25 +15,6 @@ enum WebServiceError: Error {
 }
 
 struct WebService {
-
-    // MARK:- Index
-    static func index<T: Codable>(path: String, type: T.Type, handler: @escaping (Result<[T], WebServiceError>) -> Void) {
-        guard let url = URL(string: "\(Constants.API_PATH)\(path)\(Constants.API_TOKEN)") else { handler(.failure(.badUrlError)); return }
-        
-        var request = URLRequest(url: url)
-        
-        request.httpMethod = "GET"
-        
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
-            guard error == nil, let data = data  else { handler(.failure(.noDataError)); return }
-
-            guard let data = try? JSONDecoder().decode([T].self, from: data) else { handler(.failure(.parsingJsonError)); return }
-            
-            handler(.success(data))
-            
-        }
-        .resume()
-    }
     
     // MARK:- Get
     static func get<T:Codable>(path: String, type: T.Type, handler: @escaping (Result<T, WebServiceError>) -> Void) {

@@ -8,7 +8,7 @@
 import UIKit
 
 protocol ListMoviesPresenterDelegate: AnyObject {
-    func fetched(movies: [Movie])
+    func fetchedPopularMovies(movies: [Movie])
 }
 
 class ListMoviesPresenter {
@@ -19,12 +19,12 @@ class ListMoviesPresenter {
     func getPopularMovies() {
         DispatchQueue.main.async {
             self.view?.presentLoadingScreen(completion: {
-                WebService.get(path: Constants.POPULAR_PATH, type: [Movie].self) { [weak self] result in
+                WebService.get(path: Constants.POPULAR_PATH, type: MovieResult.self) { [weak self] result in
                     DispatchQueue.main.async {
                         self?.view?.dismiss(animated: true)
                         switch result {
-                        case .success(let movies):
-                            self?.view?.fetched(movies: movies)
+                        case .success(let movieResult):
+                            self?.view?.fetchedPopularMovies(movies: movieResult.results)
                             break
                         case .failure:
                             self?.view?.presentAlert(message: "Error")
@@ -39,12 +39,12 @@ class ListMoviesPresenter {
     func getNowPlayingMovies() {
         DispatchQueue.main.async {
             self.view?.presentLoadingScreen(completion: {
-                WebService.get(path: Constants.NOW_PLAYING_PATH, type: [Movie].self) { [weak self] result in
+                WebService.get(path: Constants.NOW_PLAYING_PATH, type: MovieResult.self) { [weak self] result in
                     DispatchQueue.main.async {
                         self?.view?.dismiss(animated: true)
                         switch result {
                         case .success(let movies):
-                            self?.view?.fetched(movies: movies)
+                            //self?.view?.fetched(movies: movies)
                             break
                         case .failure:
                             self?.view?.presentAlert(message: "Error")

@@ -7,11 +7,15 @@
 
 import UIKit
 
+struct MovieResult: Codable {
+    let results: [Movie]
+}
+
 struct Movie: Codable {
     let id: Int
     let title: String
     let vote_average: Float
     let overview: String?
     let poster_path: String?
-    let genres: [Int]
+    let genre_ids: [Int]
 }

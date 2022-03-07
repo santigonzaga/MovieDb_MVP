@@ -25,7 +25,7 @@ class ShowDetailsPresenter {
                         self?.view?.dismiss(animated: true)
                         switch result {
                         case .success(let movies):
-                            self?.view?.fetched(movies: movies)
+                            // self?.view?.fetched(movies: movies)
                             break
                         case .failure:
                             self?.view?.presentAlert(message: "Error")

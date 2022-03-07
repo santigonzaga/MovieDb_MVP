@@ -22,4 +22,3 @@ class MainCoordinator: Coordinator {
         navigationController?.setViewControllers([vc], animated: true)
     }
 }
-]

@@ -48,7 +48,7 @@
 		DE6F19F227D276EF00736594 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DE6F19FB27D276F100736594 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DE6F19FE27D276F100736594 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		DE6F1A0027D276F100736594 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DE6F1A0027D276F100736594 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
 		DE6F1A0527D276F200736594 /* MovieDb_MVPTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MovieDb_MVPTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE6F1A0927D276F200736594 /* MovieDb_MVPTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDb_MVPTests.swift; sourceTree = "<group>"; };
 		DE6F1A0F27D276F200736594 /* MovieDb_MVPUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MovieDb_MVPUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -115,6 +115,7 @@
 		DE6F19F127D276EF00736594 /* MovieDb_MVP */ = {
 			isa = PBXGroup;
 			children = (
+				DE6F1A0027D276F100736594 /* Info.plist */,
 				DE6F1A3D27D6855100736594 /* Coordinator */,
 				DE6F1A2627D279A000736594 /* Resources */,
 				DE6F1A2527D2799300736594 /* Views */,
@@ -180,7 +181,6 @@
 			isa = PBXGroup;
 			children = (
 				DE6F1A3827D2896000736594 /* Extensions */,
-				DE6F1A0027D276F100736594 /* Info.plist */,
 				DE6F19FB27D276F100736594 /* Assets.xcassets */,
 				DE6F19FD27D276F100736594 /* LaunchScreen.storyboard */,
 				DE6F19F227D276EF00736594 /* AppDelegate.swift */,

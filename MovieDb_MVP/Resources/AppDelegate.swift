@@ -27,19 +27,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       return true
   }
 
-  func applicationWillResignActive( application: UIApplication) {
+    private func applicationWillResignActive( application: UIApplication) {
   }
 
-  func applicationDidEnterBackground( application: UIApplication) {
+    private func applicationDidEnterBackground( application: UIApplication) {
   }
 
-  func applicationWillEnterForeground( application: UIApplication) {
+    private func applicationWillEnterForeground( application: UIApplication) {
   }
 
-  func applicationDidBecomeActive( application: UIApplication) {
+    private func applicationDidBecomeActive( application: UIApplication) {
   }
 
-  func applicationWillTerminate( application: UIApplication) {
+    private func applicationWillTerminate( application: UIApplication) {
   }
 
 }
