@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6D99581327D68D7C00D558FC /* MoviesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D99581227D68D7C00D558FC /* MoviesTableViewCell.swift */; };
 		DE6F19F327D276EF00736594 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6F19F227D276EF00736594 /* AppDelegate.swift */; };
 		DE6F19FC27D276F100736594 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE6F19FB27D276F100736594 /* Assets.xcassets */; };
 		DE6F19FF27D276F100736594 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE6F19FD27D276F100736594 /* LaunchScreen.storyboard */; };
@@ -44,6 +45,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6D99581227D68D7C00D558FC /* MoviesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesTableViewCell.swift; sourceTree = "<group>"; };
 		DE6F19EF27D276EF00736594 /* MovieDb_MVP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieDb_MVP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE6F19F227D276EF00736594 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DE6F19FB27D276F100736594 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				DE6F1A3B27D683E600736594 /* MoviesViewController.swift */,
+				6D99581227D68D7C00D558FC /* MoviesTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -348,6 +351,7 @@
 				DE6F1A2E27D2820400736594 /* WebService.swift in Sources */,
 				DE6F19F327D276EF00736594 /* AppDelegate.swift in Sources */,
 				DE6F1A4127D6857800736594 /* MainCoordinator.swift in Sources */,
+				6D99581327D68D7C00D558FC /* MoviesTableViewCell.swift in Sources */,
 				DE6F1A2C27D281DE00736594 /* ShowDetailsPresenter.swift in Sources */,
 				DE6F1A2A27D281CD00736594 /* ListMoviesPresenter.swift in Sources */,
 				DE6F1A3227D2827200736594 /* Genre.swift in Sources */,

@@ -20,6 +20,7 @@ class MoviesViewController: UIViewController, Coordinating {
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.register(MoviesTableViewCell.self, forCellReuseIdentifier: MoviesTableViewCell.identifier)
         return tableView
     }()
     
@@ -27,7 +28,6 @@ class MoviesViewController: UIViewController, Coordinating {
         let searchController = UISearchController()
         searchController.searchBar.translatesAutoresizingMaskIntoConstraints = false
         searchController.searchBar.placeholder = "Buscar..."
-        
         return searchController
     }()
     
@@ -105,8 +105,18 @@ extension MoviesViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.textLabel?.text = "teste"
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: MoviesTableViewCell.identifier, for: indexPath) as? MoviesTableViewCell else {
+            fatalError("Unable to deque reusable cell")
+        }
+        let model = indexPath.section == 0 ? popularMovies[indexPath.row] : nowPlayingMovies[indexPath.row]
+        
+        let mutableString = NSMutableAttributedString(attachment: NSTextAttachment(image: UIImage(systemName: "star")!))
+        mutableString.append(NSAttributedString(string: " \(model.vote_average)"))
+        
+        let imageURL = URL(string: "https://image.tmdb.org/t/p/w79\(model.poster_path)")
+        
+        cell.configure(imageURL: imageURL, title: model.title, overview: model.overview ?? "Filme sem descrição", rating: mutableString)
+        
         return cell
     }
     
