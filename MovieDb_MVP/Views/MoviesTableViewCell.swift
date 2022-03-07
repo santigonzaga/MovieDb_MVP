@@ -15,7 +15,9 @@ class MoviesTableViewCell: UITableViewCell {
     private let posterImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleToFill
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 8
         return imageView
     }()
     
@@ -23,15 +25,16 @@ class MoviesTableViewCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
         return label
     }()
     
     private let overviewLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 0
+        label.numberOfLines = 4
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        label.textColor = .systemGray
         return label
     }()
     
@@ -47,7 +50,8 @@ class MoviesTableViewCell: UITableViewCell {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.distribution = .equalCentering
+        stackView.spacing = 8
+        //stackView.distribution = .equalCentering
         return stackView
     }()
     
@@ -80,15 +84,16 @@ class MoviesTableViewCell: UITableViewCell {
         constraint.isActive = true
         
         let imageViewConstraints = [
+            //posterImageView.heightAnchor.constraint(equalToConstant: 118),
             posterImageView.widthAnchor.constraint(equalToConstant: 79),
             posterImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
             posterImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-            posterImageView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -10),
             posterImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10)
         ]
         
         let stackViewConstraints = [
             stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
+            stackView.leadingAnchor.constraint(equalTo: posterImageView.trailingAnchor, constant: 10),
             stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
             stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10)
         ]

@@ -9,6 +9,7 @@ import UIKit
 
 protocol ListMoviesPresenterDelegate: AnyObject {
     func fetchedPopularMovies(movies: [Movie])
+    func fetchedNowPlayingMovies(movies: [Movie])
 }
 
 class ListMoviesPresenter {
@@ -16,9 +17,25 @@ class ListMoviesPresenter {
     
     init () {}
     
-    func getPopularMovies() {
+    func getPopularMovies(isRefreshing: Bool = false) {
         DispatchQueue.main.async {
-            self.view?.presentLoadingScreen(completion: {
+            if !isRefreshing {
+                self.view?.presentLoadingScreen(completion: {
+                    WebService.get(path: Constants.POPULAR_PATH, type: MovieResult.self) { [weak self] result in
+                        DispatchQueue.main.async {
+                            self?.view?.dismiss(animated: true)
+                            switch result {
+                            case .success(let movieResult):
+                                self?.view?.fetchedPopularMovies(movies: movieResult.results)
+                                break
+                            case .failure:
+                                self?.view?.presentAlert(message: "Error")
+                                break
+                            }
+                        }
+                    }
+                })
+            } else {
                 WebService.get(path: Constants.POPULAR_PATH, type: MovieResult.self) { [weak self] result in
                     DispatchQueue.main.async {
                         self?.view?.dismiss(animated: true)
@@ -32,27 +49,24 @@ class ListMoviesPresenter {
                         }
                     }
                 }
-            })
+            }
         }
     }
     
     func getNowPlayingMovies() {
-        DispatchQueue.main.async {
-            self.view?.presentLoadingScreen(completion: {
-                WebService.get(path: Constants.NOW_PLAYING_PATH, type: MovieResult.self) { [weak self] result in
-                    DispatchQueue.main.async {
-                        self?.view?.dismiss(animated: true)
-                        switch result {
-                        case .success(let movies):
-                            //self?.view?.fetched(movies: movies)
-                            break
-                        case .failure:
-                            self?.view?.presentAlert(message: "Error")
-                            break
-                        }
-                    }
+        
+        WebService.get(path: Constants.NOW_PLAYING_PATH, type: MovieResult.self) { [weak self] result in
+            DispatchQueue.main.async {
+                self?.view?.dismiss(animated: true)
+                switch result {
+                case .success(let movieResult):
+                    self?.view?.fetchedNowPlayingMovies(movies: movieResult.results)
+                    break
+                case .failure:
+                    self?.view?.presentAlert(message: "Error")
+                    break
                 }
-            })
+            }
         }
     }
 }

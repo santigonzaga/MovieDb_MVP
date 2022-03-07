@@ -5,8 +5,6 @@
 //  Created by Santiago del Castillo Gonzaga on 07/03/22.
 //
 
-import Foundation
-
 import UIKit
 
 class MoviesViewController: UIViewController, Coordinating {
@@ -38,11 +36,13 @@ class MoviesViewController: UIViewController, Coordinating {
         configureUI()
         configureSubviews()
         configureConstraints()
+        configureRefresh()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         presenter.getPopularMovies()
+        presenter.getNowPlayingMovies()
     }
     
     // MARK: - Functionalities
@@ -54,11 +54,13 @@ class MoviesViewController: UIViewController, Coordinating {
     }
 
     @objc func handleRefresh() {
-        //promotionPresenter.fetchPromotions(withLoadingScreen: false)
+        presenter.getPopularMovies(isRefreshing: true)
+        presenter.getNowPlayingMovies()
     }
     
     private func configureUI() {
         title = "Movies"
+        navigationController?.navigationBar.prefersLargeTitles = true
         tableView.dataSource = self
         tableView.delegate = self
         presenter.view = self
@@ -113,9 +115,9 @@ extension MoviesViewController: UITableViewDataSource, UITableViewDelegate {
         let mutableString = NSMutableAttributedString(attachment: NSTextAttachment(image: UIImage(systemName: "star")!))
         mutableString.append(NSAttributedString(string: " \(model.vote_average)"))
         
-        let imageURL = URL(string: "https://image.tmdb.org/t/p/w79\(model.poster_path)")
-        
-        cell.configure(imageURL: imageURL, title: model.title, overview: model.overview ?? "Filme sem descrição", rating: mutableString)
+        let imageURL = URL(string: "https://image.tmdb.org/t/p/w500\(model.poster_path)")
+
+        cell.configure(imageURL: imageURL, title: model.title, overview: model.overview, rating: mutableString)
         
         return cell
     }
@@ -127,6 +129,13 @@ extension MoviesViewController: ListMoviesPresenterDelegate {
     func fetchedPopularMovies(movies: [Movie]) {
         self.popularMovies = movies
         self.tableView.reloadData()
+        self.tableView.refreshControl?.endRefreshing()
+    }
+    
+    func fetchedNowPlayingMovies(movies: [Movie]) {
+        self.nowPlayingMovies = movies
+        self.tableView.reloadData()
+        self.tableView.refreshControl?.endRefreshing()
     }
     
 }
