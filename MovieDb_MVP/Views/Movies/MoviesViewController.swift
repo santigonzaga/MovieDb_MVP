@@ -118,7 +118,7 @@ extension MoviesViewController: UITableViewDataSource, UITableViewDelegate {
         let mutableString = NSMutableAttributedString(attachment: NSTextAttachment(image: UIImage(systemName: "star")!))
         mutableString.append(NSAttributedString(string: " \(model.vote_average)"))
         
-        let imageURL = URL(string: "https://image.tmdb.org/t/p/w500\(model.poster_path)")
+        let imageURL = URL(string: "\(Constants.IMAGE_PATH)\(model.poster_path)")
 
         cell.configure(imageURL: imageURL, title: model.title, overview: model.overview, rating: mutableString)
         

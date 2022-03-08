@@ -13,4 +13,5 @@ struct Constants {
     static let POPULAR_PATH = "movie/popular"
     static let NOW_PLAYING_PATH = "movie/now_playing"
     static let API_TOKEN = "?api_key=e93b8bbdf3d35298717bb67103decfaa"
+    static let IMAGE_PATH = "https://image.tmdb.org/t/p/w500"
 }
