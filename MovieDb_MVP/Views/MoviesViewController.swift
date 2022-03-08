@@ -12,7 +12,9 @@ class MoviesViewController: UIViewController, Coordinating {
     var coordinator: Coordinator?
     private let presenter = ListMoviesPresenter()
     private var popularMovies = [Movie]()
+    private var popularMoviesFiltered = [Movie]()
     private var nowPlayingMovies = [Movie]()
+    private var nowPlayingMoviesFiltered = [Movie]()
     
     // MARK: - Subviews
     private let tableView: UITableView = {
@@ -64,6 +66,7 @@ class MoviesViewController: UIViewController, Coordinating {
         tableView.dataSource = self
         tableView.delegate = self
         presenter.view = self
+        searchController.searchBar.delegate = self
         navigationItem.searchController = searchController
     }
     
@@ -100,9 +103,9 @@ extension MoviesViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return popularMovies.count
+            return popularMoviesFiltered.count
         } else {
-            return nowPlayingMovies.count
+            return nowPlayingMoviesFiltered.count
         }
     }
     
@@ -110,7 +113,7 @@ extension MoviesViewController: UITableViewDataSource, UITableViewDelegate {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MoviesTableViewCell.identifier, for: indexPath) as? MoviesTableViewCell else {
             fatalError("Unable to deque reusable cell")
         }
-        let model = indexPath.section == 0 ? popularMovies[indexPath.row] : nowPlayingMovies[indexPath.row]
+        let model = indexPath.section == 0 ? popularMoviesFiltered[indexPath.row] : nowPlayingMoviesFiltered[indexPath.row]
         
         let mutableString = NSMutableAttributedString(attachment: NSTextAttachment(image: UIImage(systemName: "star")!))
         mutableString.append(NSAttributedString(string: " \(model.vote_average)"))
@@ -122,17 +125,32 @@ extension MoviesViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
-    
+}
+
+extension MoviesViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        nowPlayingMoviesFiltered = nowPlayingMovies
+        popularMoviesFiltered = popularMovies
+        
+        if !searchText.isEmpty {
+            nowPlayingMoviesFiltered = nowPlayingMovies.filter{ $0.title.lowercased().contains(searchText.lowercased())}
+            popularMoviesFiltered = popularMovies.filter{ $0.title.lowercased().contains(searchText.lowercased())}
+        }
+        
+        self.tableView.reloadData()
+    }
 }
 
 extension MoviesViewController: ListMoviesPresenterDelegate {
     func fetchedPopularMovies(movies: [Movie]) {
+        self.popularMoviesFiltered = movies
         self.popularMovies = movies
         self.tableView.reloadData()
         self.tableView.refreshControl?.endRefreshing()
     }
     
     func fetchedNowPlayingMovies(movies: [Movie]) {
+        self.nowPlayingMoviesFiltered = movies
         self.nowPlayingMovies = movies
         self.tableView.reloadData()
         self.tableView.refreshControl?.endRefreshing()
