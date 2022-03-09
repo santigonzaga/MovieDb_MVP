@@ -8,7 +8,7 @@
 import UIKit
 
 protocol ShowDetailsPresenterDelegate: AnyObject {
-    func fetched(genres: [Genre])
+    func fetchedGenres(genres: [Genre])
 }
 
 class ShowDetailsPresenter {
@@ -22,7 +22,7 @@ class ShowDetailsPresenter {
                 self?.view?.dismiss(animated: true)
                 switch result {
                 case .success(let genreResult):
-                    self?.view?.fetched(genres: genreResult.genres)
+                    self?.view?.fetchedGenres(genres: genreResult.genres)
                     break
                 case .failure:
                     self?.view?.presentAlert(message: "Error")

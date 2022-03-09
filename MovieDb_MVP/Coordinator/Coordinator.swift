@@ -8,7 +8,7 @@
 import UIKit
 
 enum CoordinatorEvent {
-
+    case moveToMovieDetails(movie: Movie)
 }
 
 protocol Coordinator {

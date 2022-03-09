@@ -12,7 +12,12 @@ class MainCoordinator: Coordinator {
     var navigationController: UINavigationController?
 
     func eventOccurred(with type: CoordinatorEvent) {
-
+        switch type {
+        case .moveToMovieDetails(let movie):
+            let vc = MovieDetailsViewController()
+            vc.movie = movie
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
 
     func start() {

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class MovieDetailsViewController: UIViewController, Coordinating {
     
@@ -32,7 +33,7 @@ class MovieDetailsViewController: UIViewController, Coordinating {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.spacing = 8
-        stackView.distribution = .equalCentering
+        stackView.contentMode = .bottom
         return stackView
     }()
     
@@ -50,7 +51,7 @@ class MovieDetailsViewController: UIViewController, Coordinating {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 8
-        //stackView.distribution = .equalCentering
+        stackView.contentMode = .bottom
         return stackView
     }()
     
@@ -97,20 +98,34 @@ class MovieDetailsViewController: UIViewController, Coordinating {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter.view = self
         configureUI()
         configureSubViews()
         configureConstraints()
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        presenter.view?.fetched(genres: genres)
+        presenter.getGenresId()
     }
     
     // MARK: - Functionalities
     
     func configureUI() {
+        view.backgroundColor = .systemBackground
         title = "Details"
         navigationController?.navigationBar.prefersLargeTitles = false
+        
+        guard let movie = movie else { return }
+        posterImageView.kf.setImage(with: URL(string: "\(Constants.IMAGE_PATH)\(movie.poster_path)"))
+        titleLabel.text = movie.title
+        
+        let mutableString = NSMutableAttributedString(attachment: NSTextAttachment(image: UIImage(systemName: "star")!))
+        mutableString.append(NSAttributedString(string: " \(movie.vote_average)"))
+        ratingLabel.attributedText = mutableString
+        
+        overviewTitleLabel.text = "Overview"
+        overviewLabel.text = movie.overview
+
     }
     
     func configureSubViews() {
@@ -119,11 +134,11 @@ class MovieDetailsViewController: UIViewController, Coordinating {
         contentView.addSubview(horizontalStackView)
         contentView.addSubview(overviewTitleLabel)
         contentView.addSubview(overviewLabel)
-        horizontalStackView.addSubview(posterImageView)
-        horizontalStackView.addSubview(stackView)
-        stackView.addSubview(titleLabel)
-        stackView.addSubview(genresLabel)
-        stackView.addSubview(ratingLabel)
+        stackView.addArrangedSubview(titleLabel)
+        stackView.addArrangedSubview(genresLabel)
+        stackView.addArrangedSubview(ratingLabel)
+        horizontalStackView.addArrangedSubview(posterImageView)
+        horizontalStackView.addArrangedSubview(stackView)
     }
     
     func configureConstraints() {
@@ -149,10 +164,7 @@ class MovieDetailsViewController: UIViewController, Coordinating {
         
         let imageViewConstraints = [
             posterImageView.heightAnchor.constraint(equalToConstant: 194),
-            posterImageView.widthAnchor.constraint(equalToConstant: 128),
-            posterImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
-            posterImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-            posterImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10)
+            posterImageView.widthAnchor.constraint(equalToConstant: 128)
         ]
         
         let overviewTitleConstraints = [
@@ -167,10 +179,6 @@ class MovieDetailsViewController: UIViewController, Coordinating {
             overviewLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
         ]
         
-        let constraint = contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
-        constraint.priority = UILayoutPriority(250)
-        constraint.isActive = true
-        
         NSLayoutConstraint.activate(scrollViewConstraints)
         NSLayoutConstraint.activate(contentViewConstraints)
         NSLayoutConstraint.activate(horizontalStackConstraints)
@@ -181,7 +189,17 @@ class MovieDetailsViewController: UIViewController, Coordinating {
 }
 
 extension MovieDetailsViewController: ShowDetailsPresenterDelegate {
-    func fetched(genres: [Genre]) {
-        self.genres = genres
+    func fetchedGenres(genres: [Genre]) {
+        guard let movie = movie else { return }
+        self.genres = genres.filter({ genre in
+            return movie.genre_ids.contains(genre.id)
+        })
+
+        DispatchQueue.main.async {
+            let genresNames = self.genres.map { genre in
+                return genre.name
+            }
+            self.genresLabel.text = genresNames.joined(separator: ", ")
+        }
     }
 }
